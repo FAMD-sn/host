@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр сайта</title>
+</head>
+<body>
+    <script>
+        // Получаем имя сайта из URL
+        const params = new URLSearchParams(window.location.search);
+        const siteName = params.get('site');
+        
+        if (siteName) {
+            // Загружаем все сайты
+            const sites = JSON.parse(localStorage.getItem('sites') || '{}');
+            const html = sites[siteName];
+            
+            if (html) {
+                // Отображаем сайт
+                document.write(html);
+                document.close();
+            } else {
+                document.body.innerHTML = `
+                    <div style="text-align:center;padding:50px;font-family:Arial">
+                        <h1>❌ 404</h1>
+                        <p>Сайт не найден</p>
+                        <a href="/">Создать новый сайт</a>
+                    </div>
+                `;
+            }
+        } else {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
